@@ -166,6 +166,6 @@ CSRF_TRUSTED_ORIGINS.extend(
 
 SITE_NAME = "Mahin Travels"
 SITE_TAGLINE = "Discover India, one journey at a time"
-SITE_PHONE = "+91 98765 43210"
-SITE_EMAIL = "hello@mahintravels.com"
-SITE_ADDRESS = "MG Road, Bengaluru, Karnataka, India"
+SITE_PHONE = "+91 9636949201"
+SITE_EMAIL = "tanwaraabid@gmail.com"
+SITE_ADDRESS = "Mh-Khokhran,Near Tehsiladar Ki tanki ke pass"
