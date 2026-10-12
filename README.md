@@ -100,6 +100,7 @@ See `.env.example`. None of these secrets belong in source code.
 | `ALLOWED_HOSTS` | Comma-separated hostnames |
 | `POSTGRES_DB` | Database name |
 | `DATABASE_ENGINE` | `sqlite` for a quick local run (default), or `postgresql` |
+| `DATABASE_URL` | Optional PostgreSQL connection URL for hosted deployments; takes precedence over the individual Postgres settings |
 | `POSTGRES_USER` | Database user |
 | `POSTGRES_PASSWORD` | Database password |
 | `POSTGRES_HOST` | Usually `localhost` |
