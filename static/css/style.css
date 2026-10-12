@@ -149,8 +149,11 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: -.025em; }
 .chat-toggle { padding: .8rem 1.1rem; border: 0; border-radius: 999px; color: white; background: var(--saffron); box-shadow: 0 8px 24px rgba(30,39,32,.2); font-weight: 700; cursor: pointer; }
 .chat-panel { width: min(350px, calc(100vw - 2rem)); height: 430px; display: flex; flex-direction: column; overflow: hidden; margin-bottom: .7rem; border: 1px solid var(--line); border-radius: 16px; background: white; box-shadow: var(--shadow); }
 .chat-panel[hidden] { display: none; }
-.chat-head { display: flex; flex-direction: column; padding: .9rem 1rem; color: white; background: var(--teal); }
+.chat-head { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; color: white; background: var(--teal); }
+.chat-head-copy { display: flex; flex-direction: column; }
 .chat-head span { opacity: .8; font-size: .78rem; }
+.chat-close { display: grid; width: 2rem; height: 2rem; place-items: center; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; color: white; background: transparent; font-size: 1.35rem; line-height: 1; cursor: pointer; }
+.chat-close:hover, .chat-close:focus-visible { color: var(--teal); background: white; }
 .chat-log { flex: 1; display: flex; flex-direction: column; gap: .55rem; overflow: auto; padding: .9rem; }
 .chat-log p { max-width: 90%; margin: 0; padding: .65rem .75rem; border-radius: 12px; background: #f1f3ef; }
 .chat-log .user { align-self: flex-end; background: #e2eee5; }

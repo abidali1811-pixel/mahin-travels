@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2026-image-effects-1">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2026-image-effects-2">
 </head>
 <body{% if site_theme %} style="--paper: {{ site_theme.page_background }}; --section-muted: {{ site_theme.section_background }}; --card: {{ site_theme.card_background }}; --ink: {{ site_theme.text_color }}; --muted: {{ site_theme.muted_text_color }}; --teal: {{ site_theme.primary_color }}; --teal-dark: {{ site_theme.primary_dark_color }}; --saffron: {{ site_theme.accent_color }}; --line: {{ site_theme.border_color }};"{% endif %}>
   <header class="site-header">
@@ -45,11 +45,14 @@
   <div class="chat-widget" id="chat-widget">
     <button class="chat-toggle" id="chat-toggle" type="button" aria-expanded="false">Ask Mahin</button>
     <div class="chat-panel" id="chat-panel" hidden>
-      <div class="chat-head"><strong>Travel assistant</strong><span>Powered by Gemini</span></div>
+      <div class="chat-head">
+        <div class="chat-head-copy"><strong>Travel assistant</strong></div>
+        <button class="chat-close" id="chat-close" type="button" aria-label="Close chat">&times;</button>
+      </div>
       <div class="chat-log" id="chat-log"><p class="bot">Hello! Ask about India tours, hotels, cars, or buses. Prices are in INR.</p></div>
       <form id="chat-form">{% csrf_token %}<input id="chat-input" type="text" placeholder="Ask a travel question..." maxlength="800" required><button type="submit">Send</button></form>
     </div>
   </div>
-  <script src="{% static 'js/main.js' %}?v=modern-2" defer></script>
+  <script src="{% static 'js/main.js' %}?v=modern-4" defer></script>
 </body>
 </html>
