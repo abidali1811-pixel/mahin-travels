@@ -93,6 +93,15 @@ Open:
 
 See `.env.example`. None of these secrets belong in source code.
 
+### Deploying on Vercel
+
+Configure `DATABASE_URL` (or one of the supported `POSTGRES_URL` variants) in
+the Vercel project for the **Production** environment, then redeploy the latest
+commit. This project requires hosted PostgreSQL on Vercel; SQLite is only for
+local development. Run `python manage.py migrate` against the hosted database
+after configuring it. Vercel defaults Django `DEBUG` to `False`; keep
+`DJANGO_DEBUG` unset or set it to `False` in production.
+
 | Variable | Purpose |
 | --- | --- |
 | `SECRET_KEY` | Django secret key |

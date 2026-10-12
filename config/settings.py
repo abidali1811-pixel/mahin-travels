@@ -19,9 +19,15 @@ def env(name, default=""):
 
 
 SECRET_KEY = env("SECRET_KEY", "unsafe-dev-key-change-me")
+IS_VERCEL = env("VERCEL") == "1" or bool(
+    env("VERCEL_URL") or env("VERCEL_ENV")
+)
 # Prefer the project-specific name to avoid collisions with host environment
 # variables that may use DEBUG for an unrelated purpose.
-DEBUG = env("DJANGO_DEBUG", env("DEBUG", "True")).lower() in ("1", "true", "yes")
+DEBUG = env(
+    "DJANGO_DEBUG",
+    env("DEBUG", "False" if IS_VERCEL else "True"),
+).lower() in ("1", "true", "yes")
 ALLOWED_HOSTS = [
     host.strip()
     for host in env("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
@@ -97,7 +103,7 @@ if DATABASE_URL:
     DATABASES = {
         "default": database_config
     }
-elif env("VERCEL") == "1" or env("VERCEL_URL") or env("VERCEL_ENV"):
+elif IS_VERCEL:
     raise ImproperlyConfigured(
         "Vercel requires a hosted PostgreSQL connection. Set DATABASE_URL, "
         "POSTGRES_URL_NON_POOLING, or POSTGRES_URL in Project Environment Variables."
