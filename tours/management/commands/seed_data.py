@@ -103,7 +103,7 @@ PACKAGES = [
             "Day 8: Departure."
         ),
         "highlights": "Mehrangarh Fort\nLake Pichola sunset boat\nHeritage hotel stay",
-        "cover_image_url": "https://images.unsplash.com/photo-1477587458883-47145f5264ef?w=1200",
+        "cover_image_url": "https://images.unsplash.com/photo-1578999935853-4ec5fa6c1f60?w=1200",
         "per_person_rate_inr": 42500,
         "typical_group_size": 2,
         "is_featured": True,
@@ -179,7 +179,7 @@ PACKAGES = [
             "Day 7: Departure from Madurai / Chennai."
         ),
         "highlights": "Meenakshi Temple aarti\nUNESCO Brihadeeswara\nMahabalipuram shore temple",
-        "cover_image_url": "https://images.unsplash.com/photo-1582510003544-4d00b7f3967e?w=1200",
+        "cover_image_url": "https://images.unsplash.com/photo-1731268380735-4f7f0b128a0a?w=1200",
         "per_person_rate_inr": 31200,
         "typical_group_size": 2,
         "is_featured": False,
@@ -437,12 +437,12 @@ TRANSPORT = [
 
 GALLERY = [
     ("Taj Mahal, Agra", "Sunrise at India's most famous monument.", "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1000"),
-    ("Jaipur palaces", "Pink City courtyards and carved facades.", "https://images.unsplash.com/photo-1477587458883-47145f5264ef?w=1000"),
+    ("Jaipur palaces", "Pink City courtyards and carved facades.", "https://images.unsplash.com/photo-1578999935853-4ec5fa6c1f60?w=1000"),
     ("Kerala backwaters", "Canoes and coconut groves near Alleppey.", "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1000"),
     ("Goa shoreline", "Arabian Sea beaches and palms.", "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1000"),
     ("Himalayan road", "Hill roads through Himachal Pradesh.", "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1000"),
     ("Dal Lake", "Shikaras on the water in Srinagar.", "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1000"),
-    ("South Indian temple", "Gopuram towers of Tamil Nadu.", "https://images.unsplash.com/photo-1582510003544-4d00b7f3967e?w=1000"),
+    ("South Indian temple", "Gopuram towers of Tamil Nadu.", "https://images.unsplash.com/photo-1731268380735-4f7f0b128a0a?w=1000"),
     ("Andaman waters", "Clear water around Havelock Island.", "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1000"),
     ("Udaipur lake", "Evening light on Lake Pichola.", "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000"),
     ("Tea gardens", "Munnar slopes after monsoon.", "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1000"),

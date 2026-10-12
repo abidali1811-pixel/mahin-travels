@@ -75,6 +75,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "tours.context_processors.site_defaults",
+                "tours.context_processors.admin_dashboard",
             ],
         },
     }

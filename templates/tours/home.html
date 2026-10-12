@@ -1,63 +1,75 @@
 {% extends "base.html" %}
 {% load humanize %}
 
-{% block title %}{{ SITE_NAME }} · India tours{% endblock %}
+{% block title %}{{ SITE_NAME }} | India tours and holidays{% endblock %}
 
 {% block content %}
-<section class="hero">
-  <div class="container hero-inner">
-    <p class="eyebrow">Tours · Hotels · Cars · Buses</p>
-    <h1>See India with clear rates and warm hosts.</h1>
-    <p class="lead">{{ SITE_TAGLINE }}. Packages across North, South, hills, islands and heritage cities — priced in Indian Rupees.</p>
-    <div class="hero-actions">
-      <a class="btn" href="{% url 'services' %}">Browse tours</a>
-      <a class="btn btn-ghost" href="{% url 'contact' %}">Plan a trip</a>
+<section class="booking-hero">
+  <div class="container hero-copy">
+    <p class="eyebrow">Thoughtful journeys · India, your way</p>
+    <h1>Your next great story starts here.</h1>
+    <p>Discover memorable places, handpicked stays, and easy travel with a team that knows India.</p>
+  </div>
+</section>
+
+<section class="search-section" aria-label="Search travel">
+  <div class="container">
+    <div class="booking-panel">
+      <div class="booking-tabs" aria-label="Explore travel options">
+        <a class="booking-tab active" href="{% url 'services' %}" aria-current="page"><span>✦</span> Tour packages</a>
+        <a class="booking-tab" href="{% url 'hotels' %}"><span>⌂</span> Hotels</a>
+        <a class="booking-tab" href="{% url 'services' %}#transport"><span>↗</span> Cars &amp; buses</a>
+      </div>
+      <form class="destination-search" method="get" action="{% url 'services' %}">
+        <label class="destination-field" for="destination-query">
+          <span class="search-label">Where do you want to go?</span>
+          <span class="destination-input-wrap"><span class="search-pin" aria-hidden="true">⌖</span><input id="destination-query" type="search" name="q" placeholder="Try Kerala, Rajasthan, Kashmir..." autocomplete="off"></span>
+        </label>
+        <button class="search-submit" type="submit">Search trips <span aria-hidden="true">→</span></button>
+      </form>
+      <div class="popular-searches"><span>Popular:</span><a href="{% url 'services' %}?q=Kerala">Kerala</a><a href="{% url 'services' %}?q=Rajasthan">Rajasthan</a><a href="{% url 'services' %}?q=Kashmir">Kashmir</a><a href="{% url 'services' %}?q=Goa">Goa</a><a href="{% url 'services' %}?q=Andaman">Andaman</a></div>
     </div>
   </div>
 </section>
 
+<section class="trust-strip">
+  <div class="container trust-items"><span><b>✦</b> Handpicked India tours</span><span><b>₹</b> Clear prices in INR</span><span><b>♡</b> Friendly local support</span></div>
+</section>
+
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <h2>Featured packages</h2>
-      <a href="{% url 'services' %}">All India tours →</a>
-    </div>
+    <div class="section-head"><div><p class="eyebrow">Made for your next getaway</p><h2>Popular tour packages</h2></div><a class="text-link" href="{% url 'services' %}">View all tours <span aria-hidden="true">→</span></a></div>
     <div class="card-grid">
       {% for pkg in featured %}
-        <article class="card">
-          <a href="{{ pkg.get_absolute_url }}" class="card-image" style="background-image:url('{{ pkg.display_image }}')"></a>
+        <article class="card trip-card">
+          <a href="{{ pkg.get_absolute_url }}" class="card-image" style="background-image:url('{{ pkg.display_image }}')" aria-label="Explore {{ pkg.title }}"></a>
           <div class="card-body">
-            <p class="meta">{{ pkg.destination }} · {{ pkg.duration_days }}D / {{ pkg.duration_nights }}N</p>
+            <p class="meta">{{ pkg.destination }} <span>·</span> {{ pkg.duration_days }} days</p>
             <h3><a href="{{ pkg.get_absolute_url }}">{{ pkg.title }}</a></h3>
             <p>{{ pkg.short_description }}</p>
-            <p class="price">
-              <strong>₹{{ pkg.per_person_rate_inr|intcomma }}</strong> / person
-              <span>Total for {{ pkg.typical_group_size }}: ₹{{ pkg.total_rate_inr|intcomma }}</span>
-            </p>
+            <div class="trip-card-bottom"><p class="price"><span>Starting from</span><strong>₹{{ pkg.per_person_rate_inr|intcomma }} <small>/ person</small></strong></p><a class="round-arrow" href="{{ pkg.get_absolute_url }}" aria-label="View {{ pkg.title }}">→</a></div>
           </div>
         </article>
       {% empty %}
-        <p>No packages yet. Add some in the admin panel, or run <code>python manage.py seed_data</code>.</p>
+        <div class="empty-state"><h3>Your next trip is waiting</h3><p>Add tour packages in Admin, or run <code>python manage.py seed_data</code> to load examples.</p><a class="btn" href="/admin/">Open admin</a></div>
       {% endfor %}
     </div>
+  </div>
+</section>
+
+<section class="section destinations-section">
+  <div class="container destination-promo">
+    <div><p class="eyebrow">A little inspiration</p><h2>Find the India that feels like you.</h2><p>Mountain mornings, slow backwater days, desert sunsets, and timeless city streets.</p></div>
+    <a class="btn btn-light" href="{% url 'services' %}">Explore every destination <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
 <section class="section muted">
   <div class="container">
-    <div class="section-head">
-      <h2>Gallery</h2>
-      <a href="{% url 'gallery' %}">Open gallery →</a>
-    </div>
+    <div class="section-head"><div><p class="eyebrow">Postcards from the road</p><h2>Travel moments</h2></div><a class="text-link" href="{% url 'gallery' %}">See the gallery <span aria-hidden="true">→</span></a></div>
     <div class="gallery-grid">
-      {% for img in gallery %}
-        <figure>
-          <img src="{{ img.display_image }}" alt="{{ img.title }}">
-          <figcaption>{{ img.title }}</figcaption>
-        </figure>
-      {% empty %}
-        <p>Upload gallery images from Admin → Gallery images.</p>
-      {% endfor %}
+      {% for img in gallery %}<figure><img src="{{ img.display_image }}" alt="{{ img.title }}"><figcaption>{{ img.title }}</figcaption></figure>
+      {% empty %}<p>Add travel photos from Admin → Gallery images.</p>{% endfor %}
     </div>
   </div>
 </section>

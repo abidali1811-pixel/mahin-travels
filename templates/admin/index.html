@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Overview | Mahin Travels Admin{% endblock %}
+{% block bodyclass %}{{ block.super }} dashboard-overview{% endblock %}
+{% block content_title %}{% endblock %}
+{% block nav-breadcrumbs %}{% endblock %}
+{% block content %}
+<div class="dashboard-wrap">
+  <div class="dashboard-heading">
+    <div><p class="dashboard-kicker">ADMIN / OVERVIEW</p><h1>Dashboard</h1><p>Manage your travel content and customer enquiries.</p></div>
+    <a class="dashboard-primary-action" href="{% url 'admin:tours_sitetheme_changelist' %}">Edit website colors <span>↗</span></a>
+  </div>
+
+  <div class="dashboard-stats">
+    <a class="stat-card" href="{% url 'admin:tours_enquiry_changelist' %}"><span>New enquiries</span><strong>{{ dashboard_counts.new_enquiries|default:0 }}</strong><small>Review customer requests →</small></a>
+    <a class="stat-card" href="{% url 'admin:tours_tourpackage_changelist' %}"><span>Tour packages</span><strong>{{ dashboard_counts.tours|default:0 }}</strong><small>Manage destinations →</small></a>
+    <a class="stat-card" href="{% url 'admin:tours_hotel_changelist' %}"><span>Hotels</span><strong>{{ dashboard_counts.hotels|default:0 }}</strong><small>Update stays and rates →</small></a>
+    <a class="stat-card" href="{% url 'admin:tours_galleryimage_changelist' %}"><span>Gallery photos</span><strong>{{ dashboard_counts.gallery|default:0 }}</strong><small>Manage travel photos →</small></a>
+  </div>
+
+  <section class="dashboard-panel recent-panel">
+    <div class="panel-heading"><div><p class="dashboard-kicker">LATEST ACTIVITY</p><h2>Recent enquiries</h2></div><a href="{% url 'admin:tours_enquiry_changelist' %}">View all enquiries →</a></div>
+    {% if recent_enquiries %}
+      <div class="table-scroll"><table class="recent-table"><thead><tr><th>Customer</th><th>Trip interest</th><th>Received</th><th>Status</th></tr></thead><tbody>
+        {% for enquiry in recent_enquiries %}<tr><td><a href="{% url 'admin:tours_enquiry_change' enquiry.pk %}">{{ enquiry.name }}</a><small>{{ enquiry.email }}</small></td><td>{% if enquiry.package %}{{ enquiry.package.title }}{% elif enquiry.hotel %}{{ enquiry.hotel.name }}{% elif enquiry.transport %}{{ enquiry.transport.name }}{% else %}General enquiry{% endif %}</td><td>{{ enquiry.created_at|date:"M j, Y" }}</td><td>{% if enquiry.is_read %}<span class="status-pill read">Reviewed</span>{% else %}<span class="status-pill unread">New</span>{% endif %}</td></tr>{% endfor %}
+      </tbody></table></div>
+    {% else %}<div class="empty-dashboard"><p>No customer enquiries yet.</p><a href="{% url 'admin:tours_tourpackage_changelist' %}">Review your tour packages →</a></div>{% endif %}
+  </section>
+
+  <section class="dashboard-panel quick-panel">
+    <div class="panel-heading"><div><p class="dashboard-kicker">QUICK ACCESS</p><h2>Manage your website</h2></div></div>
+    <div class="quick-links">
+      <a href="{% url 'admin:tours_tourpackage_add' %}"><span>＋</span><strong>Add a tour</strong><small>Create a new India package</small></a>
+      <a href="{% url 'admin:tours_hotel_add' %}"><span>＋</span><strong>Add a hotel</strong><small>Add a stay and nightly rate</small></a>
+      <a href="{% url 'admin:tours_galleryimage_add' %}"><span>＋</span><strong>Add a photo</strong><small>Share a travel moment</small></a>
+      <a href="{% url 'admin:tours_transportoption_add' %}"><span>＋</span><strong>Add transport</strong><small>List a car or bus option</small></a>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -3,7 +3,8 @@
   const links = document.querySelector(".nav-links");
   if (toggle && links) {
     toggle.addEventListener("click", function () {
-      links.classList.toggle("open");
+      const isOpen = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
     });
   }
 
@@ -14,11 +15,10 @@
   const chatLog = document.getElementById("chat-log");
 
   if (chatToggle && chatPanel) {
-    chatPanel.hidden = true;
-    chatPanel.style.display = "none";
     chatToggle.addEventListener("click", function () {
       chatPanel.hidden = !chatPanel.hidden;
-      chatPanel.style.display = chatPanel.hidden ? "none" : "flex";
+      chatToggle.setAttribute("aria-expanded", String(!chatPanel.hidden));
+      if (!chatPanel.hidden && chatInput) chatInput.focus();
     });
   }
 
@@ -37,19 +37,17 @@
       if (!message) return;
       addLine(message, "user");
       chatInput.value = "";
-      addLine("Thinking…", "bot");
+      addLine("One moment, traveller...", "bot");
       const pending = chatLog.lastElementChild;
-
-      const body = new FormData();
-      body.append("message", message);
-      const csrf = chatForm.querySelector("[name=csrfmiddlewaretoken]");
-      if (csrf) body.append("csrfmiddlewaretoken", csrf.value);
+      const body = new FormData(chatForm);
+      body.set("message", message);
 
       try {
         const response = await fetch("/chat/", { method: "POST", body: body });
+        if (!response.ok) throw new Error("Chat request failed");
         const data = await response.json();
         pending.textContent = data.reply || "No reply received.";
-      } catch (err) {
+      } catch (error) {
         pending.textContent = "Could not reach the assistant. Please try again.";
       }
     });

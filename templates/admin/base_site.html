@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Mahin Travels Admin{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}?v=dashboard-theme-3"><script>try { document.documentElement.dataset.adminTheme = localStorage.getItem('mahin-admin-theme') || 'dark'; } catch (e) { document.documentElement.dataset.adminTheme = 'dark'; }</script>{% endblock %}
+{% block branding %}
+  <div id="site-name"><a href="{% url 'admin:index' %}"><span class="admin-mark">MT</span><span>Mahin Travels<small>ADMIN PANEL</small></span></a></div>
+{% endblock %}
+{% block usertools %}{% endblock %}
+{% block nav-global %}
+  <nav class="custom-admin-nav" aria-label="Admin navigation">
+    <p class="nav-section-label">WORKSPACE</p>
+    <a href="{% url 'admin:index' %}" class="{% if request.path == '/admin/' %}selected{% endif %}"><span class="nav-icon">⌂</span> Overview</a>
+    <a href="{% url 'admin:tours_enquiry_changelist' %}"><span class="nav-icon">✉</span> Customer enquiries{% if dashboard_counts.new_enquiries %}<span class="nav-count">{{ dashboard_counts.new_enquiries }}</span>{% endif %}</a>
+    <p class="nav-section-label">TRAVEL CONTENT</p>
+    <a href="{% url 'admin:tours_tourpackage_changelist' %}"><span class="nav-icon">✦</span> Tour packages</a>
+    <a href="{% url 'admin:tours_hotel_changelist' %}"><span class="nav-icon">⌂</span> Hotels</a>
+    <a href="{% url 'admin:tours_transportoption_changelist' %}"><span class="nav-icon">↗</span> Cars &amp; buses</a>
+    <a href="{% url 'admin:tours_galleryimage_changelist' %}"><span class="nav-icon">▧</span> Gallery photos</a>
+    <p class="nav-section-label">WEBSITE</p>
+    <a href="{% url 'admin:tours_sitetheme_changelist' %}"><span class="nav-icon">◉</span> Color theme</a>
+    <div class="admin-sidebar-bottom">
+      <div class="admin-user">Signed in as <strong>{{ user.get_username }}</strong></div>
+      <a class="password-link" href="{% url 'admin:password_change' %}">Change password</a>
+      <button type="button" id="admin-theme-toggle" class="theme-toggle" aria-pressed="false">Switch to light mode</button>
+      <a class="view-site-link" href="/">View website <span>↗</span></a>
+      <form method="post" action="{% url 'admin:logout' %}">{% csrf_token %}<button type="submit" class="signout-button">Sign out</button></form>
+    </div>
+  </nav>
+{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block extrabody %}{{ block.super }}<script src="{% static 'js/admin-theme.js' %}?v=1" defer></script>{% endblock %}

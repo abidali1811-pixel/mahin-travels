@@ -1,0 +1,36 @@
+/* Modern visual layer for Django admin; native forms, permissions, filters, and actions remain intact. */
+:root { --admin-ink: #1f2823; --admin-green: #225a48; --admin-dark: #183c32; --admin-coral: #d8875b; --admin-line: #e1e4dc; }
+body { color: var(--admin-ink); background: #f5f5f0; font-family: "DM Sans", Arial, sans-serif; }
+#header { padding: 14px 24px; color: white; background: var(--admin-dark); }
+#branding h1, #branding h1 a:link, #branding h1 a:visited { color: white; font: 600 21px "Playfair Display", Georgia, serif; }
+#site-name a { display: flex; align-items: center; gap: 10px; color: white; font: 600 21px "Playfair Display", Georgia, serif; text-decoration: none; }
+.admin-mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 10px; color: white; background: var(--admin-coral); font: 700 13px "DM Sans", Arial, sans-serif; }
+.admin-subtitle { margin-left: 5px; color: #cbd8ce; font: 600 10px "DM Sans", Arial, sans-serif; letter-spacing: .12em; }
+#user-tools { padding-top: 8px; font-size: 12px; }
+#user-tools a { color: #e9d1b8; }
+.admin-site-link { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 22px; border-bottom: 1px solid var(--admin-line); color: #59645d; background: white; font-size: 13px; }
+.admin-site-link a { color: var(--admin-green); font-weight: 600; }
+#content { padding: 24px; }
+#content h1, #content h2, #content h3 { color: var(--admin-dark); font-family: "Playfair Display", Georgia, serif; }
+#content h1 { margin-bottom: 18px; }
+.module, .inline-group, #changelist, .form-row { overflow: hidden; border: 1px solid var(--admin-line); border-radius: 12px; background: white; box-shadow: 0 5px 18px rgba(28,43,34,.04); }
+.module caption, .module h2, .inline-group h2 { padding: 10px 14px; color: white !important; background: var(--admin-green); font-weight: 600; }
+div.breadcrumbs { padding: 11px 22px; color: #657168; background: #eeeee8; border-bottom: 1px solid var(--admin-line); }
+div.breadcrumbs a { color: var(--admin-green); }
+#content-main .module table th { background: #f4f5f1; }
+table { border-collapse: collapse; }
+th, td { border-color: var(--admin-line); }
+tr:nth-child(even) { background: #fbfbf8; }
+input, textarea, select, .vTextField { border: 1px solid #d6dbd3 !important; border-radius: 7px !important; padding: 7px 9px !important; font-family: "DM Sans", Arial, sans-serif !important; }
+input:focus, textarea:focus, select:focus { outline: 3px solid rgba(216,135,91,.2); border-color: var(--admin-coral) !important; }
+input[type=submit], .button, a.button, button, .submit-row input, .object-tools a { border: 0 !important; border-radius: 7px !important; padding: 8px 12px !important; color: white !important; background: var(--admin-green) !important; font-weight: 600 !important; box-shadow: none !important; }
+input[type=submit]:hover, .button:hover, a.button:hover, button:hover { background: var(--admin-dark) !important; }
+.object-tools a.addlink { background: var(--admin-coral) !important; }
+#changelist-filter { border-left: 1px solid var(--admin-line); background: #fafaf7; }
+#changelist-filter h2 { color: var(--admin-dark); background: #eeeee8; }
+#changelist-filter li.selected a { color: var(--admin-green); font-weight: 700; }
+.paginator { padding: 10px; background: #f6f6f2; }
+.messagelist li { border: 1px solid #a8d7bd; border-radius: 7px; background: #e4f5eb; }
+.messagelist li.warning { border-color: #ebce8c; background: #fff4d8; }
+#footer { padding: 15px; color: #788178; }
+@media (max-width: 767px) { #content { padding: 16px 10px; } .admin-subtitle { display: none; } .admin-site-link { flex-direction: column; padding-inline: 12px; } #changelist-filter { border: 0; } }

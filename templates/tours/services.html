@@ -9,12 +9,16 @@
     <p class="eyebrow">Services</p>
     <h1>All India tours, cars and buses</h1>
     <p>Every package lists a per-person rate in INR plus an example total. Transport can be attached as a private car or a group bus.</p>
+    <form class="catalog-search" method="get" action="{% url 'services' %}">
+      <label for="service-query">Search tour destinations</label>
+      <div><input id="service-query" type="search" name="q" value="{{ query }}" placeholder="Try Kerala or Rajasthan"><button type="submit">Search</button>{% if query %}<a href="{% url 'services' %}">Clear</a>{% endif %}</div>
+    </form>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <h2>India tour packages</h2>
+    <h2>{% if query %}Tours matching “{{ query }}”{% else %}India tour packages{% endif %}</h2>
     <div class="card-grid">
       {% for pkg in packages %}
         <article class="card">
@@ -29,12 +33,13 @@
             </p>
           </div>
         </article>
+      {% empty %}<p class="search-empty">No tours matched that destination. Try another place or <a href="{% url 'contact' %}">ask us to plan a custom trip</a>.</p>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="section muted">
+<section class="section muted" id="transport">
   <div class="container">
     <h2>Car transport</h2>
     <div class="card-grid three">

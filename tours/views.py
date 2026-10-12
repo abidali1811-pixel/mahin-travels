@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -22,12 +23,19 @@ def home(request):
 
 def services(request):
     packages = TourPackage.objects.filter(is_published=True)
+    query = request.GET.get("q", "").strip()
+    if query:
+        packages = packages.filter(
+            Q(title__icontains=query)
+            | Q(destination__icontains=query)
+            | Q(short_description__icontains=query)
+        )
     cars = TransportOption.objects.filter(is_published=True, transport_type="car")
     buses = TransportOption.objects.filter(is_published=True, transport_type="bus")
     return render(
         request,
         "tours/services.html",
-        {"packages": packages, "cars": cars, "buses": buses},
+        {"packages": packages, "cars": cars, "buses": buses, "query": query},
     )
 
 
