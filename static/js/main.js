@@ -5,6 +5,8 @@
     toggle.addEventListener("click", function () {
       const isOpen = links.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(isOpen));
+      toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      toggle.innerHTML = isOpen ? '<span aria-hidden="true">&times;</span>' : '<span aria-hidden="true">&#9776;</span>';
     });
   }
 
