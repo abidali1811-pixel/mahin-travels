@@ -97,7 +97,7 @@ if DATABASE_URL:
     DATABASES = {
         "default": database_config
     }
-elif env("VERCEL") == "1":
+elif env("VERCEL") == "1" or env("VERCEL_URL") or env("VERCEL_ENV"):
     raise ImproperlyConfigured(
         "Vercel requires a hosted PostgreSQL connection. Set DATABASE_URL, "
         "POSTGRES_URL_NON_POOLING, or POSTGRES_URL in Project Environment Variables."
