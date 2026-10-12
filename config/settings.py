@@ -6,6 +6,7 @@ Never commit real passwords or API keys.
 """
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 import os
 
@@ -75,18 +76,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASE_URL = env("DATABASE_URL").strip()
+DATABASE_URL = (
+    env("DATABASE_URL").strip()
+    or env("POSTGRES_URL_NON_POOLING").strip()
+    or env("POSTGRES_URL").strip()
+    or env("POSTGRES_PRISMA_URL").strip()
+)
 DATABASE_ENGINE = env("DATABASE_ENGINE", "sqlite").lower()
 if DATABASE_URL:
     import dj_database_url
 
+    database_config = dj_database_url.parse(
+        DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True,
+    )
+    # Supabase's transaction pooler can route each transaction to a different
+    # database connection, so Django must not keep server-side cursors open.
+    database_config["DISABLE_SERVER_SIDE_CURSORS"] = True
     DATABASES = {
-        "default": dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True,
-        )
+        "default": database_config
     }
+elif env("VERCEL") == "1":
+    raise ImproperlyConfigured(
+        "Vercel requires a hosted PostgreSQL connection. Set DATABASE_URL, "
+        "POSTGRES_URL_NON_POOLING, or POSTGRES_URL in Project Environment Variables."
+    )
 elif DATABASE_ENGINE == "postgresql":
     DATABASES = {
         "default": {
