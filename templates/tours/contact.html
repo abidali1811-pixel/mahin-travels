@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Contact · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Enquire</p>
+    <h1>Tell us where you want to go</h1>
+    <p>Ask about a tour, hotel, car, or bus. Your message is saved in our database and our team will contact you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <form method="post" class="form-card">
+      {% csrf_token %}
+      {% for field in form %}
+        <label>
+          {{ field.label }}
+          {{ field }}
+          {{ field.errors }}
+        </label>
+      {% endfor %}
+      <button class="btn" type="submit">Send enquiry</button>
+    </form>
+    <aside class="rate-box">
+      <h2>Visit or call</h2>
+      <p>{{ SITE_ADDRESS }}</p>
+      <p>{{ SITE_PHONE }}</p>
+      <p>{{ SITE_EMAIL }}</p>
+      <p class="meta">You can also use the chat bubble for quick questions about tours, hotels and transport.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

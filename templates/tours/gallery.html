@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Moments</p>
+    <h1>Travel gallery</h1>
+    <p>Gallery entries are managed from the admin panel. Uploaded image files are kept in the media folder.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="gallery-grid large">
+      {% for img in images %}
+        <figure>
+          <img src="{{ img.display_image }}" alt="{{ img.title }}">
+          <figcaption>
+            <strong>{{ img.title }}</strong>
+            {% if img.caption %}<span>{{ img.caption }}</span>{% endif %}
+          </figcaption>
+        </figure>
+      {% empty %}
+        <p>No gallery images yet. Upload files from Admin → Gallery images.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

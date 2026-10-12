@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}Services · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Services</p>
+    <h1>All India tours, cars and buses</h1>
+    <p>Every package lists a per-person rate in INR plus an example total. Transport can be attached as a private car or a group bus.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>India tour packages</h2>
+    <div class="card-grid">
+      {% for pkg in packages %}
+        <article class="card">
+          <a href="{{ pkg.get_absolute_url }}" class="card-image" style="background-image:url('{{ pkg.display_image }}')"></a>
+          <div class="card-body">
+            <p class="meta">{{ pkg.destination }} · {{ pkg.duration_days }} days</p>
+            <h3><a href="{{ pkg.get_absolute_url }}">{{ pkg.title }}</a></h3>
+            <p>{{ pkg.short_description }}</p>
+            <p class="price">
+              <strong>₹{{ pkg.per_person_rate_inr|intcomma }}</strong> per person
+              <span>Total ({{ pkg.typical_group_size }} pax): ₹{{ pkg.total_rate_inr|intcomma }}</span>
+            </p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section muted">
+  <div class="container">
+    <h2>Car transport</h2>
+    <div class="card-grid three">
+      {% for item in cars %}
+        <article class="card compact">
+          <div class="card-image short" style="background-image:url('{{ item.display_image }}')"></div>
+          <div class="card-body">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <p class="meta">{{ item.capacity }} seats</p>
+            <a class="btn btn-small" href="{% url 'contact' %}?transport={{ item.id }}">Enquire about this car</a>
+            <p class="price">
+              <strong>₹{{ item.rate_per_day_inr|intcomma }}</strong> / day
+              <span>₹{{ item.rate_per_person_inr|intcomma }} per person</span>
+            </p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <h2 class="spaced">Bus transport</h2>
+    <div class="card-grid three">
+      {% for item in buses %}
+        <article class="card compact">
+          <div class="card-image short" style="background-image:url('{{ item.display_image }}')"></div>
+          <div class="card-body">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <p class="meta">{{ item.capacity }} seats</p>
+            <a class="btn btn-small" href="{% url 'contact' %}?transport={{ item.id }}">Enquire about this bus</a>
+            <p class="price">
+              <strong>₹{{ item.rate_per_day_inr|intcomma }}</strong> / day
+              <span>₹{{ item.rate_per_person_inr|intcomma }} per person</span>
+            </p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}Hotels · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Stay</p>
+    <h1>Hotels with package pricing</h1>
+    <p>Nightly rates in INR. Each hotel can be linked to one or more tour packages from the admin panel.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card-grid">
+      {% for hotel in hotels %}
+        <article class="card">
+          <div class="card-image" style="background-image:url('{{ hotel.display_image }}')"></div>
+          <div class="card-body">
+            <p class="meta">{{ hotel.city }} · {{ hotel.get_star_rating_display }}</p>
+            <h3>{{ hotel.name }}</h3>
+            <p>{{ hotel.description }}</p>
+            {% if hotel.amenity_list %}
+              <p class="meta">{{ hotel.amenities }}</p>
+            {% endif %}
+            <p class="price">
+              <strong>₹{{ hotel.price_per_night_inr|intcomma }}</strong> per night
+            </p>
+            {% with pkgs=hotel.packages.all %}
+              {% if pkgs %}
+                <p class="meta">Packages:
+                  {% for pkg in pkgs %}
+                    <a href="{{ pkg.get_absolute_url }}">{{ pkg.title }}</a>{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+              {% endif %}
+            {% endwith %}
+            <a class="btn btn-small" href="{% url 'contact' %}?hotel={{ hotel.id }}">Enquire about this hotel</a>
+          </div>
+        </article>
+      {% empty %}
+        <p>No hotels yet. Add them in Admin → Hotels.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

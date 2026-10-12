@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}{{ SITE_NAME }} · India tours{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <p class="eyebrow">Tours · Hotels · Cars · Buses</p>
+    <h1>See India with clear rates and warm hosts.</h1>
+    <p class="lead">{{ SITE_TAGLINE }}. Packages across North, South, hills, islands and heritage cities — priced in Indian Rupees.</p>
+    <div class="hero-actions">
+      <a class="btn" href="{% url 'services' %}">Browse tours</a>
+      <a class="btn btn-ghost" href="{% url 'contact' %}">Plan a trip</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Featured packages</h2>
+      <a href="{% url 'services' %}">All India tours →</a>
+    </div>
+    <div class="card-grid">
+      {% for pkg in featured %}
+        <article class="card">
+          <a href="{{ pkg.get_absolute_url }}" class="card-image" style="background-image:url('{{ pkg.display_image }}')"></a>
+          <div class="card-body">
+            <p class="meta">{{ pkg.destination }} · {{ pkg.duration_days }}D / {{ pkg.duration_nights }}N</p>
+            <h3><a href="{{ pkg.get_absolute_url }}">{{ pkg.title }}</a></h3>
+            <p>{{ pkg.short_description }}</p>
+            <p class="price">
+              <strong>₹{{ pkg.per_person_rate_inr|intcomma }}</strong> / person
+              <span>Total for {{ pkg.typical_group_size }}: ₹{{ pkg.total_rate_inr|intcomma }}</span>
+            </p>
+          </div>
+        </article>
+      {% empty %}
+        <p>No packages yet. Add some in the admin panel, or run <code>python manage.py seed_data</code>.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section muted">
+  <div class="container">
+    <div class="section-head">
+      <h2>Gallery</h2>
+      <a href="{% url 'gallery' %}">Open gallery →</a>
+    </div>
+    <div class="gallery-grid">
+      {% for img in gallery %}
+        <figure>
+          <img src="{{ img.display_image }}" alt="{{ img.title }}">
+          <figcaption>{{ img.title }}</figcaption>
+        </figure>
+      {% empty %}
+        <p>Upload gallery images from Admin → Gallery images.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

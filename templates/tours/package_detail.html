@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}{{ package.title }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="detail-hero" style="background-image:url('{{ package.display_image }}')">
+  <div class="container overlay">
+    <p class="eyebrow">{{ package.destination }}</p>
+    <h1>{{ package.title }}</h1>
+    <p>{{ package.duration_days }} days / {{ package.duration_nights }} nights</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <p class="lead">{{ package.description }}</p>
+      {% if package.highlight_list %}
+        <h2>Highlights</h2>
+        <ul class="ticks">
+          {% for item in package.highlight_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <h2>Itinerary</h2>
+      <ol class="itinerary">
+        {% for day in package.itinerary_days %}
+          <li>{{ day }}</li>
+        {% endfor %}
+      </ol>
+    </div>
+    <aside class="rate-box">
+      <p class="meta">Package rates (INR)</p>
+      <p class="big">₹{{ package.per_person_rate_inr|intcomma }} <small>per person</small></p>
+      <p>Example total for {{ package.typical_group_size }} travellers:</p>
+      <p class="big secondary">₹{{ package.total_rate_inr|intcomma }}</p>
+      <a class="btn" href="{% url 'contact' %}?package={{ package.id }}">Enquire about this tour</a>
+    </aside>
+  </div>
+</section>
+
+<section class="section muted">
+  <div class="container">
+    <h2>Hotels for this package</h2>
+    <div class="card-grid three">
+      {% for hotel in hotels %}
+        <article class="card compact">
+          <div class="card-image short" style="background-image:url('{{ hotel.display_image }}')"></div>
+          <div class="card-body">
+            <p class="meta">{{ hotel.city }} · {{ hotel.star_rating }} star</p>
+            <h3>{{ hotel.name }}</h3>
+            <p>{{ hotel.description }}</p>
+            <p class="price">
+              <strong>₹{{ hotel.price_per_night_inr|intcomma }}</strong> / night
+            </p>
+          </div>
+        </article>
+      {% empty %}
+        <p>No hotels linked yet.</p>
+      {% endfor %}
+    </div>
+
+    <h2 class="spaced">Car &amp; bus options</h2>
+    <div class="card-grid three">
+      {% for item in transport %}
+        <article class="card compact">
+          <div class="card-body">
+            <p class="meta">{{ item.get_transport_type_display }} · {{ item.capacity }} seats</p>
+            <h3>{{ item.name }}</h3>
+            <p class="price">
+              <strong>₹{{ item.rate_per_day_inr|intcomma }}</strong> / day
+              <span>₹{{ item.rate_per_person_inr|intcomma }} per person</span>
+            </p>
+          </div>
+        </article>
+      {% empty %}
+        <p>No transport linked yet. See the Services page for the full fleet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
