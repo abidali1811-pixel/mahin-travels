@@ -26,6 +26,12 @@ ALLOWED_HOSTS = [
     for host in env("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
     if host.strip()
 ]
+vercel_hosts = []
+for variable in ("VERCEL_URL", "VERCEL_BRANCH_URL", "VERCEL_PROJECT_PRODUCTION_URL"):
+    host = env(variable).strip()
+    if host and host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+        vercel_hosts.append(host)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -120,6 +126,11 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in env("CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+CSRF_TRUSTED_ORIGINS.extend(
+    f"https://{host}"
+    for host in vercel_hosts
+    if f"https://{host}" not in CSRF_TRUSTED_ORIGINS
+)
 
 SITE_NAME = "Mahin Travels"
 SITE_TAGLINE = "Discover India, one journey at a time"
