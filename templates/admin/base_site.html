@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}{{ title }} | Mahin Travels Admin{% endblock %}
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}?v=dashboard-theme-3"><script>try { document.documentElement.dataset.adminTheme = localStorage.getItem('mahin-admin-theme') || 'dark'; } catch (e) { document.documentElement.dataset.adminTheme = 'dark'; }</script>{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}?v=dashboard-theme-4"><script>try { document.documentElement.dataset.adminTheme = localStorage.getItem('mahin-admin-theme') || 'dark'; } catch (e) { document.documentElement.dataset.adminTheme = 'dark'; }</script>{% endblock %}
 {% block branding %}
   <div id="site-name"><a href="{% url 'admin:index' %}"><span class="admin-mark">MT</span><span>Mahin Travels<small>ADMIN PANEL</small></span></a></div>
 {% endblock %}

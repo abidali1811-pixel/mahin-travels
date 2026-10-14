@@ -132,6 +132,12 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: -.025em; }
 .ticks, .itinerary { padding-left: 1.2rem; }
 .ticks li { padding: .25rem 0; }
 .form-card label { display: block; margin-bottom: 1rem; font-weight: 600; }
+.captcha-block { margin: 1.2rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.captcha-heading { display: flex; align-items: center; gap: .7rem; margin-bottom: .8rem; }
+.captcha-code { display: inline-block; padding: .6rem 1rem; border: 2px solid var(--saffron); border-radius: 8px; background: var(--card); color: var(--ink); font: 700 1.1rem/1.2 monospace; letter-spacing: .28rem; user-select: none; }
+.captcha-refresh { flex: 0 0 auto; }
+.captcha-block small { display: block; margin-top: -.5rem; }
+.captcha-error { display: block; margin-top: .25rem; color: #ae2828; font-size: .87rem; font-weight: 400; }
 .input, .textarea, .select, input, select, textarea { width: 100%; margin-top: .35rem; padding: .72rem .8rem; border: 1px solid #d7dbd2; border-radius: 9px; color: var(--ink); background: white; font: inherit; }
 .input:focus, .textarea:focus, .select:focus, input:focus, select:focus, textarea:focus { outline: 3px solid rgba(216,135,91,.22); border-color: var(--saffron); }
 .errorlist { margin: .2rem 0 0; padding-left: 1.1rem; color: #ae2828; font-size: .87rem; }

@@ -60,6 +60,9 @@ html, body { min-height: 100%; color: var(--dash-text); background: var(--dash-b
 .recent-table td { padding: 13px 12px; border-bottom: 1px solid #242a30; background: transparent !important; font-size: 12px; }
 .recent-table tbody tr:last-child td { border-bottom: 0; }
 .recent-table td small { display: block; margin-top: 3px; color: #8692a0; font-size: 11px; }
+html[data-admin-theme="dark"] #content .recent-panel table.recent-table tbody tr { color: #e1e6ed !important; background: #111519 !important; }
+html[data-admin-theme="dark"] #content .recent-panel table.recent-table tbody tr:nth-child(even) { background: #171c22 !important; }
+html[data-admin-theme="dark"] #content .recent-panel table.recent-table tbody td { color: #e1e6ed !important; background: transparent !important; }
 .status-pill { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
 .status-pill.unread { color: #ffd7a0; background: #4a3420; }
 .status-pill.read { color: #a5e5bd; background: #203b2d; }

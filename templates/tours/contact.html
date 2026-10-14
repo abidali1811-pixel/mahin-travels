@@ -16,11 +16,23 @@
     <form method="post" class="form-card">
       {% csrf_token %}
       {% for field in form %}
+        {% if field.name == "captcha" %}
+          <div class="captcha-block">
+            <div class="captcha-heading">
+              <span class="meta">Security check</span>
+              <strong id="captcha-code" class="captcha-code" aria-label="Security code">{{ captcha_code }}</strong>
+              <button class="btn btn-small captcha-refresh" type="button" id="captcha-refresh">Refresh</button>
+            </div>
+            <label>{{ field.label }} {{ field }} <span class="captcha-error" id="captcha-error" role="alert">{{ field.errors }}</span></label>
+            <small class="meta">Enter all 6 characters. You can refresh the code if needed.</small>
+          </div>
+        {% else %}
         <label>
           {{ field.label }}
           {{ field }}
           {{ field.errors }}
         </label>
+        {% endif %}
       {% endfor %}
       <button class="btn" type="submit">Send enquiry</button>
     </form>
@@ -33,4 +45,32 @@
     </aside>
   </div>
 </section>
+<script>
+  document.getElementById("captcha-refresh").addEventListener("click", async function () {
+    const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+    const response = await fetch("{% url 'refresh_contact_captcha' %}", {
+      method: "POST",
+      headers: { "X-CSRFToken": csrfToken }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      document.getElementById("captcha-code").textContent = data.code;
+      document.getElementById("id_captcha").value = "";
+    }
+  });
+
+  document.querySelector(".form-card").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const response = await fetch(form.action || window.location.href, {
+      method: "POST",
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+      body: new FormData(form)
+    });
+    const data = await response.json();
+    const captchaError = document.getElementById("captcha-error");
+    captchaError.textContent = (data.errors && data.errors.captcha ? data.errors.captcha.join(" ") : "");
+    if (data.ok) window.location.assign(window.location.pathname);
+  });
+</script>
 {% endblock %}

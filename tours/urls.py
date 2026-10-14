@@ -9,5 +9,6 @@ urlpatterns = [
     path("hotels/", views.hotels, name="hotels"),
     path("gallery/", views.gallery, name="gallery"),
     path("contact/", views.contact, name="contact"),
+    path("contact/captcha/refresh/", views.refresh_contact_captcha, name="refresh_contact_captcha"),
     path("chat/", views.chat_api, name="chat_api"),
 ]

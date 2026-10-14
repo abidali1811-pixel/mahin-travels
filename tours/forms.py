@@ -4,6 +4,12 @@ from .models import Enquiry, Hotel, TourPackage, TransportOption
 
 
 class EnquiryForm(forms.ModelForm):
+    captcha = forms.CharField(
+        label="Enter the characters shown",
+        max_length=6,
+        widget=forms.TextInput(attrs={"autocomplete": "off", "inputmode": "text"}),
+    )
+
     class Meta:
         model = Enquiry
         fields = ["name", "email", "phone", "package", "hotel", "transport", "message"]
@@ -20,6 +26,7 @@ class EnquiryForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.captcha_answer = kwargs.pop("captcha_answer", None)
         super().__init__(*args, **kwargs)
         self.fields["package"].queryset = TourPackage.objects.filter(is_published=True)
         self.fields["package"].required = False
@@ -37,3 +44,9 @@ class EnquiryForm(forms.ModelForm):
             elif name in ("package", "hotel", "transport"):
                 css = "select"
             field.widget.attrs["class"] = css
+
+    def clean_captcha(self):
+        value = self.cleaned_data["captcha"].strip().upper()
+        if not self.captcha_answer or value != self.captcha_answer:
+            raise forms.ValidationError("The security code did not match. Please try again.")
+        return value

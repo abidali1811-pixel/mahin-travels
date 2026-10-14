@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+import secrets
 
 from .chatbot import ask_gemini
 from .forms import EnquiryForm
@@ -66,16 +67,30 @@ def gallery(request):
     return render(request, "tours/gallery.html", {"images": images})
 
 
+def _new_captcha():
+    return "".join(secrets.choice("ABCDEFGHJKLMNPQRSTUVWXYZ23456789") for _ in range(6))
+
+
 def contact(request):
+    if "contact_captcha" not in request.session:
+        request.session["contact_captcha"] = _new_captcha()
     if request.method == "POST":
-        form = EnquiryForm(request.POST)
+        form = EnquiryForm(request.POST, captcha_answer=request.session.get("contact_captcha"))
         if form.is_valid():
             form.save()
+            request.session["contact_captcha"] = _new_captcha()
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse({"ok": True})
             messages.success(
                 request,
                 "Thank you. Your enquiry has been saved. Our team will contact you soon.",
             )
             return redirect("contact")
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            return JsonResponse(
+                {"ok": False, "errors": {name: [str(error) for error in errors] for name, errors in form.errors.items()}},
+                status=400,
+            )
     else:
         initial = {}
         package_id = request.GET.get("package")
@@ -88,7 +103,18 @@ def contact(request):
         if transport_id:
             initial["transport"] = transport_id
         form = EnquiryForm(initial=initial)
-    return render(request, "tours/contact.html", {"form": form})
+    return render(
+        request,
+        "tours/contact.html",
+        {"form": form, "captcha_code": request.session["contact_captcha"]},
+    )
+
+
+@require_POST
+def refresh_contact_captcha(request):
+    code = _new_captcha()
+    request.session["contact_captcha"] = code
+    return JsonResponse({"code": code})
 
 
 @require_POST
